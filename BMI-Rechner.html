@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI-Rechner</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>BMI-Rechner</h2>
+
+        <label for="age">Alter (in Jahren):</label>
+        <input type="number" id="age" placeholder="z.B. 30">
+
+        <label for="weight">Gewicht (in kg):</label>
+        <input type="number" id="weight" placeholder="z.B. 70">
+
+        <label for="height">Größe (in m):</label>
+        <input type="number" id="height" step="0.01" placeholder="z.B. 1.75">
+
+        <button onclick="calculateBMI()">Berechne BMI</button>
+
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        function calculateBMI() {
+            const age = parseInt(document.getElementById('age').value);
+            const weight = parseFloat(document.getElementById('weight').value);
+            const height = parseFloat(document.getElementById('height').value);
+            
+            if (!age || age <= 0 || !weight || !height || height <= 0 || weight <= 0) {
+                document.getElementById('result').textContent = "Bitte gib gültige Werte ein!";
+                return;
+            }
+
+            const bmi = weight / (height * height);
+            let message = `Dein BMI ist: ${bmi.toFixed(2)}. Du bist ${age} Jahre alt. `;
+
+            if (bmi < 18.5) {
+                message += "Du hast Untergewicht.";
+            } else if (bmi >= 18.5 && bmi < 25) {
+                message += "Dein Gewicht ist normal.";
+            } else if (bmi >= 25 && bmi < 30) {
+                message += "Du hast Übergewicht.";
+            } else {
+                message += "Du leidest an Adipositas.";
+            }
+
+            if (age >= 65 && bmi >= 25) {
+                message += " Ältere Menschen haben möglicherweise andere BMI-Richtlinien, sprich mit einem Arzt.";
+            }
+
+            document.getElementById('result').textContent = message;
+        }
+    </script>
+
+</body>
+</html>
