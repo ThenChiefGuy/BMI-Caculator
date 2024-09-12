@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BMI-Rechner</title>
+    <title>BMI Calculator</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -49,18 +49,18 @@
 <body>
 
     <div class="container">
-        <h2>BMI-Rechner</h2>
+        <h2>BMI Calculator</h2>
 
-        <label for="age">Alter (in Jahren):</label>
-        <input type="number" id="age" placeholder="z.B. 30">
+        <label for="age">Age (in years):</label>
+        <input type="number" id="age" placeholder="e.g., 30">
 
-        <label for="weight">Gewicht (in kg):</label>
-        <input type="number" id="weight" placeholder="z.B. 70">
+        <label for="weight">Weight (in kg):</label>
+        <input type="number" id="weight" placeholder="e.g., 70">
 
-        <label for="height">Größe (in m):</label>
-        <input type="number" id="height" step="0.01" placeholder="z.B. 1.75">
+        <label for="height">Height (in meters):</label>
+        <input type="number" id="height" step="0.01" placeholder="e.g., 1.75">
 
-        <button onclick="calculateBMI()">Berechne BMI</button>
+        <button onclick="calculateBMI()">Calculate BMI</button>
 
         <div class="result" id="result"></div>
     </div>
@@ -72,25 +72,35 @@
             const height = parseFloat(document.getElementById('height').value);
             
             if (!age || age <= 0 || !weight || !height || height <= 0 || weight <= 0) {
-                document.getElementById('result').textContent = "Bitte gib gültige Werte ein!";
+                document.getElementById('result').textContent = "Please enter valid values!";
                 return;
             }
 
             const bmi = weight / (height * height);
-            let message = `Dein BMI ist: ${bmi.toFixed(2)}. Du bist ${age} Jahre alt. `;
+            let message = `Your BMI is: ${bmi.toFixed(2)}. You are ${age} years old. `;
 
-            if (bmi < 18.5) {
-                message += "Du hast Untergewicht.";
+            // BMI classification based on the image scale
+            if (bmi < 16) {
+                message += "Severe Thinness.";
+            } else if (bmi >= 16 && bmi < 17) {
+                message += "Moderate Thinness.";
+            } else if (bmi >= 17 && bmi < 18.5) {
+                message += "Mild Thinness.";
             } else if (bmi >= 18.5 && bmi < 25) {
-                message += "Dein Gewicht ist normal.";
+                message += "Normal.";
             } else if (bmi >= 25 && bmi < 30) {
-                message += "Du hast Übergewicht.";
+                message += "Overweight.";
+            } else if (bmi >= 30 && bmi < 35) {
+                message += "Obese Class I.";
+            } else if (bmi >= 35 && bmi < 40) {
+                message += "Obese Class II.";
             } else {
-                message += "Du leidest an Adipositas.";
+                message += "Obese Class III.";
             }
 
+            // Additional message for older individuals
             if (age >= 65 && bmi >= 25) {
-                message += " Ältere Menschen haben möglicherweise andere BMI-Richtlinien, sprich mit einem Arzt.";
+                message += " Older individuals may have different BMI guidelines. Please consult a doctor.";
             }
 
             document.getElementById('result').textContent = message;
@@ -99,3 +109,4 @@
 
 </body>
 </html>
+
